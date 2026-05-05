@@ -350,11 +350,11 @@ def _get_audio_magic_type(audio_path: str) -> str:
     if header[:4] == b"ftyp" and b"mp4" in header[:8]:
         return "mp4"
 
-    if header[:9] == b"#!SILK_V3":
+    if header.startswith(b"#!SILK_V3"):
         return "silk"
 
     # Tencent SILK: leading \x02 byte before #!SILK_V3
-    if header[:1] == b"\x02" and header[1:10] == b"#!SILK_V3":
+    if header.startswith(b"\x02#!SILK_V3"):
         return "silk"
 
     return ""
